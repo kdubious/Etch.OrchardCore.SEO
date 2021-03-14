@@ -19,7 +19,8 @@ namespace Etch.OrchardCore.SEO.Redirects.Routing
 
         public override ValueTask<RouteValueDictionary> TransformAsync(HttpContext httpContext, RouteValueDictionary values)
         {
-            var contentItemId = GetContentItemId(httpContext);
+
+            var contentItemId = GetContentItemId(httpContext).Result;
 
             if (!string.IsNullOrEmpty(contentItemId))
             {
@@ -34,19 +35,24 @@ namespace Etch.OrchardCore.SEO.Redirects.Routing
             return new ValueTask<RouteValueDictionary>((RouteValueDictionary)null);
         }
 
-        private string GetContentItemId(HttpContext httpContext)
+        private async Task<string> GetContentItemId(HttpContext httpContext)
         {
             AutorouteEntry entry;
             var url = httpContext.Request.Path.ToString().TrimEnd('/');
 
-            if (string.IsNullOrEmpty(url) && _entries.TryGetEntryByPath("/", out entry))
+            if (string.IsNullOrEmpty(url) )
             {
-                return entry.ContentItemId;
+                var rsltSlash = await _entries.TryGetEntryByPathAsync("/");
+                if(rsltSlash.Item1)
+                {
+                    return rsltSlash.Item2.ContentItemId;
+                }
             }
 
-            if (_entries.TryGetEntryByPath(url, out entry))
+            var rsltUrl = await _entries.TryGetEntryByPathAsync(url);
+            if (rsltUrl.Item1)
             {
-                return entry.ContentItemId;
+                return rsltUrl.Item2.ContentItemId;
             }
 
             return null;

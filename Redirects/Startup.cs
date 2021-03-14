@@ -46,7 +46,10 @@ namespace Etch.OrchardCore.SEO.Redirects
             var session = serviceProvider.GetRequiredService<ISession>();
             var redirects = session.QueryIndex<RedirectPartIndex>(o => o.Published).ListAsync().GetAwaiter().GetResult();
 
-            entries.AddEntries(redirects.Select(x => new AutorouteEntry(x.ContentItemId, x.Url)));
+            foreach(var redirect in redirects)
+            {
+                entries.AddEntry(redirect.ContentItemId, redirect.Url);
+            }
 
             // The 1st segment prevents the transformer to be executed for the home.
             routes.MapDynamicControllerRoute<RedirectRouteTransformer>("/{**slug}");

@@ -32,11 +32,12 @@ namespace Etch.OrchardCore.SEO.Redirects
 
         public int UpdateFrom1()
         {
-            SchemaBuilder.CreateMapIndexTable(nameof(RedirectPartIndex), table => table
-                .Column<string>("ContentItemId", c => c.WithLength(26))
-                .Column<string>("Url", col => col.WithLength(UrlValidation.MaxPathLength))
-                .Column<bool>("Published")
-            );
+            // TODO: need to solve this
+            //SchemaBuilder.CreateMapIndexTable(nameof(RedirectPartIndex), table => table
+            //    .Column<string>("ContentItemId", c => c.WithLength(26))
+            //    .Column<string>("Url", col => col.WithLength(UrlValidation.MaxPathLength))
+            //    .Column<bool>("Published")
+            //);
 
             SchemaBuilder.AlterTable(nameof(RedirectPartIndex), table => table
                 .CreateIndex("IDX_RedirectPartIndex_ContentItemId", "ContentItemId")
