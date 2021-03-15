@@ -15,5 +15,8 @@
 
         public const string TitleFieldDisplayName = "Title";
         public const string TitleFieldName = "MetaTitle";
+
+        public const string JSONLDFieldDisplayName = "JSON-LD Data";
+        public const string JSONLDFieldName = "JSONLD";
     }
 }

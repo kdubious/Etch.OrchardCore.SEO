@@ -36,6 +36,11 @@ namespace Etch.OrchardCore.SEO.MetaTags.Extensions
             return part?.Get<TextField>(Constants.TitleFieldName)?.Text ?? string.Empty;
         }
 
+        public static string GetJSONLD(this MetaTagsPart part)
+        {
+            return part?.Get<TextField>(Constants.JSONLDFieldName)?.Text ?? string.Empty;
+        }
+
         public static void UpdateDescription(this MetaTagsPart part, string description)
         {
             var field = part.GetOrCreate<TextField>(Constants.DescriptionFieldName);
@@ -66,6 +71,17 @@ namespace Etch.OrchardCore.SEO.MetaTags.Extensions
             {
                 field.Text = title;
                 part.Apply(Constants.TitleFieldName, field);
+            }
+        }
+
+        public static void UpdateJSONLD(this MetaTagsPart part, string title)
+        {
+            var field = part.GetOrCreate<TextField>(Constants.JSONLDFieldName);
+
+            if (field != null)
+            {
+                field.Text = title;
+                part.Apply(Constants.JSONLDFieldName, field);
             }
         }
     }

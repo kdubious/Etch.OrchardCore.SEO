@@ -81,6 +81,23 @@ namespace Etch.OrchardCore.SEO.MetaTags
             return 5;
         }
 
+        public int UpdateFrom5()
+        {
+            _contentDefinitionManager.AlterPartDefinition("MetaTagsPart", builder => builder
+                .WithField(Constants.JSONLDFieldName, field => field
+                    .OfType(typeof(TextField).Name)
+                    .WithDisplayName(Constants.JSONLDFieldDisplayName)
+                    .WithPosition("5")
+                    .WithSettings(new TextFieldSettings
+                    {
+                        Hint = "Enter JSON-LD data for your product, service or other entity defined by this page.",
+                    })
+                )
+            );
+
+            return 6;
+        }
+
         private void AddMetaTagFields()
         {
             _contentDefinitionManager.AlterPartDefinition("MetaTagsPart", builder => builder

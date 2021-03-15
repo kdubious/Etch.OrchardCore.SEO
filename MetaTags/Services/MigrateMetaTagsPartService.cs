@@ -60,6 +60,7 @@ namespace Etch.OrchardCore.SEO.MetaTags.Services
                 part.UpdateDescription(part.Description);
                 part.UpdateImage(part.Images);
                 part.UpdateTitle(part.Title);
+                part.UpdateJSONLD(part.JSONLD);
 
                 contentItem.Apply(part);
                 await _contentManager.UpdateAsync(contentItem);
